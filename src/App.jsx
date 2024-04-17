@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <p>Dashboard</p>
+
     </>
   );
 }
