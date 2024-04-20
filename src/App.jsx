@@ -1,15 +1,19 @@
-import { useState } from "react";
+import React from 'react'
+import Header from './components/Header'
+import Body from './components/Body'
+import Side from './components/Side'
+import LineChart from './components/LineChart'
 
-import "./App.css";
-
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
     <>
 
+      <Header />
+      <Body />
+      <LineChart />
+      <Side />
     </>
-  );
+  )
 }
 
-export default App;
+export default App
