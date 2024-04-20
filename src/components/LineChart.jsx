@@ -23,6 +23,14 @@ ChartJS.register(
 );
 
 export const options = {
+    scales: {
+        x: {
+            title: {
+                display: true,
+                text: 'Month'
+            }
+        }
+    },
     responsive: true,
     plugins: {
         legend: {
@@ -45,6 +53,7 @@ export const data = {
             data: [65, 59, 80, 81, 56, 55, 40],
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            tension: 0.2
         },
         // {
         //     label: 'Dataset 2',
