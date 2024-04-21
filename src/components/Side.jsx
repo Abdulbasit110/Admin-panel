@@ -2,7 +2,9 @@ import React from 'react'
 
 const Side = () => {
     return (
-        <div>Side</div>
+        <div className='w-1/4 border border-gray-600  '>
+
+        </div>
     )
 }
 

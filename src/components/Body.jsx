@@ -4,10 +4,10 @@ import Record from './Record'
 
 const Body = () => {
     return (
-        <>
+        <div className='w-3/4 mx-3'>
             <ChartGrid />
             <Record />
-        </>
+        </div>
     )
 }
 
