@@ -30,7 +30,7 @@ export const data = {
     labels,
     datasets: [
         {
-            data: [0, 20, 10, 30, 50],
+            data: [0, 20, 10, 30, 50, 80],
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
             tension: 0.2,
