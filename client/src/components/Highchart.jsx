@@ -28,7 +28,11 @@ const options = {
         buttonOptions: {
             enabled: true
         }
+    },
+    credits: {
+        enabled: false
     }
+
 }
 
 export const Highchart = () => <div>
