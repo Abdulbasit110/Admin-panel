@@ -1,5 +1,6 @@
 import React from 'react'
 import LineChart from './LineChart'
+import { Highchart } from './Highchart'
 
 const ChartGrid = () => {
     return (
@@ -10,7 +11,8 @@ const ChartGrid = () => {
             </div>
             <div className='w-1/2'>
                 <LineChart titleText={'Z-axis Magnetic Field Waveform'} yTitle={'Z-axis Magnetic Field/nT'} />
-                <LineChart titleText={'Total axis Magnetic Field Waveform'} yTitle={'Total axis Magnetic Field/nT'} />
+                {/* <LineChart titleText={'Total axis Magnetic Field Waveform'} yTitle={'Total axis Magnetic Field/nT'} /> */}
+                <Highchart />
             </div>
         </div>
     )
