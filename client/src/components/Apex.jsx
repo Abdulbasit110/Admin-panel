@@ -21,19 +21,34 @@ const Apex = ({ axis }) => {
 
     const options = {
         chart: {
-            type: 'line'
+            type: 'area',
+            stacked: false,
+            height: 350,
+            zoom: {
+                type: 'x',
+                enabled: true,
+                autoScaleYaxis: true
+            },
+            toolbar: {
+                autoSelected: 'zoom'
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        markers: {
+            size: 0,
         },
         xaxis: {
-            categories: getXAxisLabels(chartData),
+            tickAmount: 6,
+            // type: 'datetime', // Specify that x-axis values are of datetime type
+            categories: chartData.map(data => new Date(`${data.date}T${data.time}`).getTime()), // Convert date and time to milliseconds since Unix epoch
             labels: {
-                rotate: -45, // Rotate labels by -45 degrees
-                // tickAmount: 5 // Limit to 5 labels initially (adjust as needed)
-            },
-            title: {
-                text: 'Time (s)', // X-axis label
-                style: {
-                    fontSize: '14px',
-                    fontWeight: 'bold'
+
+                formatter: function (value) {
+                    // Format the timestamp to display time in the desired format
+                    const date = new Date(value);
+                    return `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
                 }
             }
         },
@@ -59,13 +74,19 @@ const Apex = ({ axis }) => {
         let index = 0;
 
         while (index < data.length) {
-            const timeParts = data[index].time.split(':');
-            const seconds = parseInt(timeParts[2]);
-            const group = Math.floor(seconds / 10) * 10;
-            xAxisLabels.push(`${group}s`);
+            const currentItem = data[index];
+            if (currentItem && currentItem.time) {
+                const timeParts = currentItem.time.split(':');
+                if (timeParts.length === 3) {
+                    const seconds = parseInt(timeParts[2]);
+                    const group = Math.floor(seconds / 10) * 10;
+                    xAxisLabels.push(`${group}s`);
+                }
+            }
             index += 11; // Skip 10 values
         }
 
+        // console.log('X-Axis Labels:', xAxisLabels); // Log the extracted labels for debugging
         return xAxisLabels;
     }
 
