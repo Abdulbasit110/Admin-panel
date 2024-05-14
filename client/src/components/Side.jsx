@@ -1,10 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button';
+import { useEffect } from 'react';
+import axios from 'axios';
 // import InputLabel from '@mui/material/InputLabel';
 // import Select from '@mui/material/Select';
 // import MenuItem from '@mui/material/MenuItem';
 
 const Side = () => {
+    const [latestValues, setLatestValues] = useState({
+        x: 0,
+        y: 0,
+        z: 0,
+        total: 0
+    });
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/normalValues');
+                const fetchedData = response.data;
+
+                if (fetchedData.length > 0) {
+                    const lastData = fetchedData[fetchedData.length - 1];
+                    setLatestValues({
+                        x: lastData.x.toFixed(2),
+                        y: lastData.y.toFixed(2),
+                        z: lastData.z.toFixed(2),
+                        total: lastData.total.toFixed(2)
+                    });
+                } else {
+                    console.log('No data available.');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        setInterval(() => {
+            fetchData();
+
+        }, 3000);
+    }, []);
+
     return (
         <div className='w-1/4'>
             <div>
@@ -52,22 +90,22 @@ const Side = () => {
                     <legend>Magnetic Field Value</legend>
                     <div className='mb-4'>
                         <label htmlFor="xValue" className='font-bold'>X-axis:</label>
-                        <input type="text" name="xValue" id="xValue" value={' 0.00'} className='border border-slate-500 rounded-sm mx-5' />
+                        <input type="text" name="xValue" id="xValue" value={latestValues.x} className='border border-slate-500 rounded-sm mx-5' />
                         <span>nT</span>
                     </div>
                     <div className='mb-4'>
-                        <label htmlFor="xValue" className='font-bold'>X-axis:</label>
-                        <input type="text" name="xValue" id="xValue" value={' 0.00'} className='border border-slate-500 rounded-sm mx-5' />
+                        <label htmlFor="yValue" className='font-bold'>X-axis:</label>
+                        <input type="text" name="yValue" id="yValue" value={latestValues.y} className='border border-slate-500 rounded-sm mx-5' />
                         <span>nT</span>
                     </div>
                     <div className='mb-4'>
-                        <label htmlFor="xValue" className='font-bold'>X-axis:</label>
-                        <input type="text" name="xValue" id="xValue" value={' 0.00'} className='border border-slate-500 rounded-sm mx-5' />
+                        <label htmlFor="zValue" className='font-bold'>X-axis:</label>
+                        <input type="text" name="zValue" id="zValue" value={latestValues.z} className='border border-slate-500 rounded-sm mx-5' />
                         <span>nT</span>
                     </div>
                     <div className='mb-4'>
-                        <label htmlFor="xValue" className='font-bold'>X-axis:</label>
-                        <input type="text" name="xValue" id="xValue" value={' 0.00'} className='border border-slate-500 rounded-sm mx-5' />
+                        <label htmlFor="tValue" className='font-bold'>X-axis:</label>
+                        <input type="text" name="tValue" id="tValue" value={latestValues.total} className='border border-slate-500 rounded-sm mx-5' />
                         <span>nT</span>
                     </div>
                 </fieldset>
