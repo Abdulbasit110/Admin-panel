@@ -9,8 +9,9 @@ const corsOptions = {
 };
 
 const app = express();
-app.use(cors(corsOptions)); // Use this after the variable declaration
-const port = 3000;
+app.use(express.json());
+app.use(cors(corsOptions));
+const port = 3001;
 
 // Create a MySQL connection
 const connection = mysql2.createConnection({
@@ -59,6 +60,36 @@ FROM avg_data`,
         return;
       }
       res.json(results);
+    }
+  );
+});
+
+app.get("/normalValues", (req, res) => {
+  connection.query(`SELECT *  FROM mysqldata`, (err, results) => {
+    if (err) {
+      console.error("Error querying MySQL:", err);
+      res.status(500).send("Error fetching values");
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post("/device-data", (req, res) => {
+  const { x, y, z, total, date, time } = req.body; // Assuming your request body contains these fields
+
+  // Insert the received data into your MySQL database
+  connection.query(
+    `INSERT INTO mysqldata (x, y, z, total, date, time) VALUES (?, ?, ?, ?, ?, ?)`,
+    [x, y, z, total, date, time],
+    (err, results) => {
+      if (err) {
+        console.error("Error inserting data into MySQL:", err);
+        res.status(500).send("Error inserting data");
+        return;
+      }
+      // console.log("Data inserted into MySQL successfully");
+      res.status(201).send("Data inserted successfully");
     }
   );
 });
