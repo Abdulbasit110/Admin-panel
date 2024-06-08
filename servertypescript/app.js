@@ -54,7 +54,7 @@ app.use(body_parser_1.default.json());
 // Create a database connection pool
 const pool = (0, promise_1.createPool)({
     connectionLimit: 10, // Adjust as per your requirements
-    host: process.env.DB_HOST || "127.0.0.1",
+    host: process.env.DB_HOST || "localhost",
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "Abasit@123",
     database: process.env.DB_NAME || "graph_data",
@@ -144,7 +144,7 @@ function fetchAverageAndRMSValues() {
     SQRT(AVG(z*z)) AS rmsZ,
     SQRT(AVG(total*total)) AS rmsTotal
 FROM
-    (SELECT * FROM graph_data.chartdata ORDER BY TIMESTAMP DESC LIMIT 18000) AS last_18000
+    (SELECT * FROM chartdata ORDER BY TIMESTAMP DESC LIMIT 18000) AS last_18000
 WHERE
     LENGTH(TIMESTAMP) = 10 AND TIMESTAMP != 0
 GROUP BY
@@ -249,7 +249,7 @@ function initializeSerialPort() {
     });
 }
 // Initialize the serial port
-initializeSerialPort();
+// initializeSerialPort();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080;
 server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);

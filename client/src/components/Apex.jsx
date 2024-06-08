@@ -70,86 +70,30 @@ const Apex = ({ axis }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/values');
+                const response = await axios.get('http://localhost:3001/values');
                 setChartData(response.data);
+                console.log("ehol")
 
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
-        const timer = setInterval(() => {
-            fetchData();
-        }, 1000);
-        // fetchData();
 
-        return () => { clearInterval(timer) }
+        // const timer = setInterval(() => {
+        fetchData();
+        // }, 1000);
+        // // fetchData();
+
+        // return () => { clearInterval(timer) }
 
     }, []);
 
-    useEffect(() => {
-        const timer2 = setInterval(() => { sendRandomData() }, 1000);
-        return () => { clearInterval(timer2) }
-    }, [])
+    // useEffect(() => {
+    //     const timer2 = setInterval(() => { sendRandomData() }, 1000);
+    //     return () => { clearInterval(timer2) }
+    // }, [])
 
-    // const options = {
-    //     chart: {
-    //         id: 'realtime',
-    //         height: 350,
-    //         type: 'line',
-    //         animations: {
-    //             enabled: true,
-    //             easing: 'linear',
-    //             dynamicAnimation: {
-    //                 speed: 1000
-    //             }
-    //         },
-    //         toolbar: {
-    //             show: false
-    //         },
-    //         zoom: {
-    //             enabled: false
-    //         }
-    //     },
-    //     dataLabels: {
-    //         enabled: false
-    //     },
-    //     stroke: {
-    //         curve: 'smooth'
-    //     },
-    //     title: {
-    //         text: 'Dynamic Updating Chart',
-    //         align: 'left'
-    //     },
-    //     xaxis: {
-    //         tickAmount: 6,
-    //         // type: 'datetime', // Specify that x-axis values are of datetime type
-    //         categories: chartData.map(data => new Date(`${data.date}T${data.time}`).getTime()), // Convert date and time to milliseconds since Unix epoch
-    //         labels: {
-
-    //             formatter: function (value) {
-    //                 // Format the timestamp to display time in the desired format
-    //                 const date = new Date(value);
-    //                 return `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
-    //             }
-    //         }
-    //     },
-    //     yaxis: {
-    //         labels: {
-    //             formatter: function (value) {
-    //                 return value.toFixed(2); // Format y-axis labels to two decimal places
-    //             }
-    //         },
-    //         title: {
-    //             text: axis, // Y-axis label
-    //             style: {
-    //                 fontSize: '14px',
-    //                 fontWeight: 'bold'
-    //             }
-    //         }
-    //     },
-    //     // Other ApexCharts options as needed
-    // };
     const options = {
         chart: {
             id: 'realtime',
@@ -159,57 +103,119 @@ const Apex = ({ axis }) => {
                 enabled: true,
                 easing: 'linear',
                 dynamicAnimation: {
-                    speed: 1000
+                    // speed: 1000
                 }
             },
-            zoom: {
-                type: 'x',
-                enabled: true,
-                autoScaleYaxis: true
-            },
-            toolbar: {
-                autoSelected: 'zoom'
-            },
-
+        },
+        zoom: {
+            type: 'x',
+            enabled: true,
+            autoScaleYaxis: true
         },
         dataLabels: {
-            enabled: false
+            // enabled: false
         },
-        markers: {
-            size: 0,
-            stroke: {
-                curve: 'smooth'
-            },
-            title: {
-                text: 'Dynamic Updating Chart',
-                align: 'left'
-            },
-            xaxis: {
-                tickAmount: 6,
-                categories: chartData.map(data => new Date(`${data.date}T${data.time}`).getTime()),// Initially empty, will be populated dynamically
-                labels: {
-                    formatter: function (value) {
-                        const date = new Date(value);
-                        return `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
-                    }
-                }
-            },
-            yaxis: {
-                labels: {
-                    formatter: function (value) {
-                        return value.toFixed(2);
-                    }
-                },
-                title: {
-                    text: axis, // Initially empty, will be updated dynamically
-                    style: {
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                    }
+        stroke: {
+            curve: 'smooth'
+        },
+        title: {
+            text: 'Dynamic Updating Chart',
+            align: 'left'
+        },
+        xaxis: {
+            tickAmount: 6,
+            // type: 'datetime', // Specify that x-axis values are of datetime type
+            categories: chartData.map(data => new Date(`${data.date}T${data.time}`).getTime()), // Convert date and time to milliseconds since Unix epoch
+            labels: {
+
+                formatter: function (value) {
+                    // Format the timestamp to display time in the desired format
+                    const date = new Date(value);
+                    return `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
                 }
             }
-        }
-    }
+        },
+        yaxis: {
+            labels: {
+                formatter: function (value) {
+                    return value.toFixed(2); // Format y-axis labels to two decimal places
+                }
+            },
+            title: {
+                text: axis, // Y-axis label
+                style: {
+                    fontSize: '14px',
+                    fontWeight: 'bold'
+                }
+            }
+        },
+        // Other ApexCharts options as needed
+    };
+    // const options = {
+    //     chart: {
+    //         // type: 'numeric',
+    //         // type: 'area',
+    //         stacked: false,
+    //         // id: 'realtime',
+    //         height: 350,
+    //         // type: 'line',
+    //         animations: {
+    //             enabled: true,
+    //             easing: 'linear',
+    //             dynamicAnimation: {
+    //                 speed: 1000
+    //             }
+    //         },
+    //         zoom: {
+    //             type: 'x',
+    //             enabled: true,
+    //             autoScaleYaxis: true
+    //         },
+    //         toolbar: {
+    //             autoSelected: 'zoom'
+    //         },
+
+    //     },
+    //     dataLabels: {
+    //         enabled: false
+    //     },
+    //     markers: {
+    //         size: 0,
+    //         stroke: {
+    //             curve: 'smooth'
+    //         },
+    //         title: {
+    //             text: 'Dynamic Updating Chart',
+    //             align: 'left'
+    //         },
+    //         xaxis: {
+    //             tickPlacement: 'between',
+    //             // tickAmount: 10,
+    //             tickAmount: 6,
+    //             categories: chartData.map(data => new Date(`${data.date}T${data.time}`).getTime()),// Initially empty, will be populated dynamically
+    //             labels: {
+    //                 formatter: function (value) {
+    //                     const date = new Date(value);
+    //                     return `${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
+    //                 }
+    //             }
+    //         },
+    //         yaxis: {
+    //             labels: {
+    //                 formatter: function (value) {
+    //                     return value.toFixed(2);
+    //                 }
+    //             },
+    //             title: {
+    //                 text: axis, // Initially empty, will be updated dynamically
+    //                 style: {
+    //                     fontSize: '14px',
+    //                     fontWeight: 'bold'
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
 
     function getXAxisLabels(data) {

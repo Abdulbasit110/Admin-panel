@@ -11,7 +11,7 @@ const corsOptions = {
 const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
-const port = 3000;
+const port = 3001;
 
 // Create a MySQL connection
 const connection = mysql2.createConnection({

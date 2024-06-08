@@ -19,7 +19,7 @@ const Side = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/normalValues');
+                const response = await axios.get('http://localhost:3001/normalValues');
                 const fetchedData = response.data;
 
                 if (fetchedData.length > 0) {
@@ -33,14 +33,15 @@ const Side = () => {
                 } else {
                     console.log('No data available.');
                 }
+                console.log("helo")
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-        setInterval(() => {
-            fetchData();
+        fetchData();
+        // setInterval(() => {
 
-        }, 3000);
+        // }, 3000);
     }, []);
 
     return (
