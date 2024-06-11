@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project demonstrates a real-time data dashboard that visualizes data from a device using ApexCharts. The application consists of a backend server written in Node.js and TypeScript, a MySQL database, and a frontend built with Vite and React.js that updates charts in real-time using Socket.io.
+This project demonstrates a real-time data dashboard that visualizes data from a device using ApexCharts. The application consists of a backend server written in Node.js and TypeScript, a MySQL database, and a frontend built with Vite and React.js, AntDesign, Tailwind CSS that updates charts in real-time using Socket.io.
 
 ## Table of Contents
 
