@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import { useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+// import io from 'socket.io-client';
 // import InputLabel from '@mui/material/InputLabel';
 // import Select from '@mui/material/Select';
 // import MenuItem from '@mui/material/MenuItem';
 
-const Side = () => {
+
+const Side = ({ chartData, handleConnect, handleDisconnect }) => {
     const [latestValues, setLatestValues] = useState({
         x: 0,
         y: 0,
@@ -14,35 +16,24 @@ const Side = () => {
         total: 0
     });
 
-
-
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:3001/normalValues');
-                const fetchedData = response.data;
-
-                if (fetchedData.length > 0) {
-                    const lastData = fetchedData[fetchedData.length - 1];
-                    setLatestValues({
-                        x: lastData.x.toFixed(2),
-                        y: lastData.y.toFixed(2),
-                        z: lastData.z.toFixed(2),
-                        total: lastData.total.toFixed(2)
-                    });
-                } else {
-                    console.log('No data available.');
-                }
-                console.log("helo")
-            } catch (error) {
-                console.error('Error fetching data:', error);
+        const updateLatestValues = () => {
+            if (chartData && chartData.length > 0) {
+                const lastData = chartData[chartData.length - 1];
+                console.log('lastData:', lastData); // Log the last data point
+                setLatestValues({
+                    x: lastData.avg_x !== undefined ? lastData.avg_x.toFixed(2) : 0,
+                    y: lastData.avg_y !== undefined ? lastData.avg_y.toFixed(2) : 0,
+                    z: lastData.avg_z !== undefined ? lastData.avg_z.toFixed(2) : 0,
+                    total: lastData.avg_total !== undefined ? lastData.avg_total.toFixed(2) : 0
+                });
+            } else {
+                console.log('No data available.');
             }
         };
-        fetchData();
-        // setInterval(() => {
 
-        // }, 3000);
-    }, []);
+        updateLatestValues();
+    }, [chartData]);
 
     return (
         <div className='w-1/4'>
@@ -95,17 +86,17 @@ const Side = () => {
                         <span>nT</span>
                     </div>
                     <div className='mb-4'>
-                        <label htmlFor="yValue" className='font-bold'>X-axis:</label>
+                        <label htmlFor="yValue" className='font-bold'>y-axis:</label>
                         <input type="text" name="yValue" id="yValue" value={latestValues.y} className='border border-slate-500 rounded-sm mx-5' />
                         <span>nT</span>
                     </div>
                     <div className='mb-4'>
-                        <label htmlFor="zValue" className='font-bold'>X-axis:</label>
+                        <label htmlFor="zValue" className='font-bold'>z-axis:</label>
                         <input type="text" name="zValue" id="zValue" value={latestValues.z} className='border border-slate-500 rounded-sm mx-5' />
                         <span>nT</span>
                     </div>
                     <div className='mb-4'>
-                        <label htmlFor="tValue" className='font-bold'>X-axis:</label>
+                        <label htmlFor="tValue" className='font-bold'>T-axis:</label>
                         <input type="text" name="tValue" id="tValue" value={latestValues.total} className='border border-slate-500 rounded-sm mx-5' />
                         <span>nT</span>
                     </div>
@@ -114,7 +105,7 @@ const Side = () => {
                     <legend>Operations Instruction</legend>
                     <div className='flex gap-4 mb-4'>
                         <div>
-                            <Button className='w-36' variant="contained">Connect</Button>
+                            <Button className='w-36' variant="contained" onClick={handleConnect}>Connect</Button>
                         </div>
                         <div>
                             <Button className='w-36' variant="contained">Collect</Button>
@@ -135,7 +126,7 @@ const Side = () => {
                             <Button className='w-36' variant="contained">Data Replay</Button>
                         </div>
                         <div>
-                            <Button className='w-36' variant="contained">Exit</Button>
+                            <Button className='w-36' variant="contained" onClick={handleDisconnect}>Exit</Button>
 
                         </div>
                     </div>

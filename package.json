@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "apexcharts": "^3.49.0",
-    "axios": "^1.6.8"
-  }
-}

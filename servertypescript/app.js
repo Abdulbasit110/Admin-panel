@@ -45,6 +45,7 @@ const promise_1 = require("mysql2/promise");
 const app = (0, express_1.default)();
 const server = http.createServer(app);
 const io = new socket_io_1.Server(server, {
+    transports: ["polling"],
     cors: {
         origin: "*", // Consider specifying trusted origins for security
     },
@@ -207,13 +208,14 @@ function initializeSerialPort() {
                                     // Ensure there are at least 5 parts (timestamp, x, y, z, total)
                                     const [timestamp, x, y, z, total] = parts.map((part) => parseFloat(part));
                                     console.log(` Timestamp: ${timestamp}, x: ${x}, y: ${y}, z: ${z}, total: ${total}`);
-                                    // Emit these values to connected clients
-                                    io.emit("dataReceived", {
-                                        timestamp,
-                                        x,
-                                        y,
-                                        z,
-                                        total,
+                                    io.on('connection', (socket) => {
+                                        socket.emit("dataReceived", {
+                                            timestamp,
+                                            x,
+                                            y,
+                                            z,
+                                            total,
+                                        });
                                     });
                                     // Insert data into the database
                                     if (bufferEnabled) {

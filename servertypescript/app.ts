@@ -10,10 +10,12 @@ import { createPool, Pool, RowDataPacket } from "mysql2/promise";
 const app = express();
 const server: HttpServer = http.createServer(app);
 const io = new Server(server, {
+    transports: ["polling"],
     cors: {
         origin: "*", // Consider specifying trusted origins for security
     },
 });
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -184,14 +186,16 @@ async function initializeSerialPort() {
                                 console.log(
                                     ` Timestamp: ${timestamp}, x: ${x}, y: ${y}, z: ${z}, total: ${total}`
                                 );
-                                // Emit these values to connected clients
-                                io.emit("dataReceived", {
-                                    timestamp,
-                                    x,
-                                    y,
-                                    z,
-                                    total,
+                                io.on('connection', (socket) => {
+                                    socket.emit("dataReceived", {
+                                        timestamp,
+                                        x,
+                                        y,
+                                        z,
+                                        total,
+                                    });
                                 });
+
                                 // Insert data into the database
                                 if (bufferEnabled) {
                                     insertData({
