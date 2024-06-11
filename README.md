@@ -1,5 +1,6 @@
 # Real-Time Data Dashboard
-Internship project for National Center of Artificial Intelligence NEUROCOMPUTATION LAB 
+Internship project for: 
+## National Center of Artificial Intelligence NEUROCOMPUTATION LAB 
 visit : https://nedncl.com/
 ## Overview
 
